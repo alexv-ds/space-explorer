@@ -1,0 +1,9 @@
+[submodule "third_patry/flecs"]
+	path = third_patry/flecs
+	url = https://github.com/SanderMertens/flecs.git
+[submodule "third_party/fmt"]
+	path = third_party/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "third_party/spdlog"]
+	path = third_party/spdlog
+	url = https://github.com/gabime/spdlog.git
