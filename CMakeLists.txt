@@ -13,6 +13,8 @@ endif()
 find_package(FLECS REQUIRED)
 find_package(FMT REQUIRED)
 find_package(SPDLOG REQUIRED)
+find_package(GLAD REQUIRED)
+find_package(SFML REQUIRED)
 
 add_executable(main
   src/main.cpp
@@ -25,4 +27,6 @@ target_link_libraries(main
   flecs::flecs_static
   fmt::fmt
   spdlog::spdlog
+  SFML::SFML
+  glad::glad
 )
