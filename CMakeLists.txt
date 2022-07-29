@@ -16,10 +16,15 @@ find_package(SPDLOG REQUIRED)
 find_package(GLAD REQUIRED)
 find_package(SFML REQUIRED)
 
+add_compile_definitions(SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+
 add_executable(main
   src/main.cpp
-  engine/src/module/time.cpp
+  src/setup_spdlog.cpp
   engine/src/Engine.cpp
+  engine/src/module/time.cpp
+  engine/src/module/main_window.cpp
+  engine/src/module/fs.cpp
 )
 target_include_directories(main PRIVATE engine/include)
 

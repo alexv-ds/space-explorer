@@ -3,6 +3,8 @@
 
 namespace engine {
 
+
+
 struct time {
   time(flecs::world& world);
 
@@ -25,6 +27,8 @@ struct time {
   };
   
 };
+
+using Time = time;
 
 
 }

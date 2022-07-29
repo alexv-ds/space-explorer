@@ -7,6 +7,10 @@ namespace engine {
 
 struct MainThread_Pre {};
 struct MainThread_Post {};
+struct RenderThread {};
+struct RenderSystemPriority {
+  unsigned int priority;
+};
 
 class Engine : utils::noncopyable {
 public:
@@ -17,6 +21,7 @@ private:
   //для вызова некоторых систем вручную
   flecs::query<> preframe_systems_query;
   flecs::query<> postframe_systems_query;
+  flecs::query<> render_systems_query;
 };
   
 }
