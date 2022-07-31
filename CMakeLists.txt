@@ -15,6 +15,10 @@ find_package(FMT REQUIRED)
 find_package(SPDLOG REQUIRED)
 find_package(GLAD REQUIRED)
 find_package(SFML REQUIRED)
+find_package(JSON REQUIRED)
+find_package(GLM REQUIRED)
+find_package(LOOSEQUADTREE REQUIRED)
+
 
 add_compile_definitions(SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
 
@@ -34,4 +38,7 @@ target_link_libraries(main
   spdlog::spdlog
   SFML::SFML
   glad::glad
+  nlohmann_json::nlohmann_json
+  glm::glm
+  loose_quadtree::loose_quadtree
 )
