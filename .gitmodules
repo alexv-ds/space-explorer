@@ -19,3 +19,6 @@
 [submodule "third_party/loose_quadtree"]
 	path = third_party/loose_quadtree
 	url = https://github.com/gerazo/loose_quadtree.git
+[submodule "third_party/concurrentqueue"]
+	path = third_party/concurrentqueue
+	url = https://github.com/cameron314/concurrentqueue.git

@@ -18,6 +18,8 @@ find_package(SFML REQUIRED)
 find_package(JSON REQUIRED)
 find_package(GLM REQUIRED)
 find_package(LOOSEQUADTREE REQUIRED)
+find_package(CONCURRENTQUEUE REQUIRED)
+
 
 
 add_compile_definitions(SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
@@ -41,4 +43,5 @@ target_link_libraries(main
   nlohmann_json::nlohmann_json
   glm::glm
   loose_quadtree::loose_quadtree
+  concurrentqueue 
 )
