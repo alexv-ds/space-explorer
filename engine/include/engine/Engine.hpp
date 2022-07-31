@@ -8,9 +8,6 @@ namespace engine {
 struct MainThread_Pre {};
 struct MainThread_Post {};
 struct RenderThread {};
-struct RenderSystemPriority {
-  unsigned int priority;
-};
 
 class Engine : utils::noncopyable {
 public:

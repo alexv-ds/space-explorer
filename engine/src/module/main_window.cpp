@@ -231,7 +231,7 @@ MainWindow::MainWindow(flecs::world& world) {
       }); 
 
     world.system("Window Swap Buffers")
-      .kind<MainThread_Post>()
+      .kind<RenderThread>()
       .term<SFML_Window>().singleton()
       .term<OpenglContext>().singleton()
       .iter([](flecs::iter it) {
