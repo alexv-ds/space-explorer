@@ -33,7 +33,8 @@ add_executable(main
   engine/src/module/fs.cpp
   engine/src/module/space/space.cpp
   engine/src/module/space/SpatialIndex.cpp
-
+  engine/src/module/space/TreeObjectDeleter.cpp
+  engine/src/module/space/TreeObject.cpp
 )
 target_include_directories(main PRIVATE engine/include)
 
