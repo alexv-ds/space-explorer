@@ -6,26 +6,29 @@
 
 namespace engine::space::internal {
 
-template<class T> class TreeObjectDeleter;
+class TreeObjectDeleter;
 
 class SpatialIndex final : public std::enable_shared_from_this<SpatialIndex>, public utils::noncopyable {
 public:
-  using object_ptr = std::shared_ptr<TreeObject>;
   static std::shared_ptr<SpatialIndex> create_index();
 
-  object_ptr create_object();
+  std::shared_ptr<TreeObject> create_object();
+  void process_queues();
+  ~SpatialIndex();
 private:
+  struct Pimpl;
   friend class TreeObject;
-  friend template<class T> class TreeObjectDeleter;
+  friend class TreeObjectDeleter;
 
-  void destroy_object(TreeObject*) {}
-  void update_object(TreeObject*) {}
+  void destroy_object(TreeObject*);
+  void update_object(TreeObject*);
   
-  moodycamel::ConcurrentQueue<object_ptr> insert_queue;
-  moodycamel::ConcurrentQueue<object_ptr> destroy_queue;
+  moodycamel::ConcurrentQueue<TreeObject*> insert_queue;
+  moodycamel::ConcurrentQueue<TreeObject*> destroy_queue;
+  std::unique_ptr<Pimpl> pimpl;
 
   SpatialIndex();
-  SpatialIndex();
+
 };
 
 

@@ -14,13 +14,14 @@ public:
   flecs::entity_t holder;
 
   void update();
+  ~TreeObject();
 private:
   friend class BBoxExtractor;
   friend class SpatialIndex;
   friend class TreeObjectDeleter;
 
   TreeObject();
-  ~TreeObject();
+  
 
   inline void update_bbox() noexcept;
   void index_lock(std::shared_ptr<SpatialIndex>) noexcept;
@@ -40,11 +41,5 @@ inline void TreeObject::update_bbox() noexcept {
   width = size.x;
   height = size.y;
 }
-
-/*class BBoxExtractor {
-  static inline void ExtractBoundingBox(const TreeObject* in, TreeObject::BBox* out) noexcept {
-    (*out) = in->bbox;
-  }
-};*/
   
 }

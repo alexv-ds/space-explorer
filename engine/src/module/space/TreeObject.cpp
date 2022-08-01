@@ -18,7 +18,9 @@ void TreeObject::index_unlock() noexcept {
 }
 
 void TreeObject::update() {
-  assert(this->p_index != nullptr);
+  if (this->p_index == nullptr) {
+    return;
+  }
   update_bbox();
   this->p_index->update_object(this);
 }
