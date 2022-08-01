@@ -85,7 +85,10 @@
     "numeric": "cpp",
     "random": "cpp",
     "ranges": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "stack": "cpp",
+    "future": "cpp",
+    "shared_mutex": "cpp"
   },
   "cmake.debugConfig" : {
     "cwd": "${workspaceFolder}"

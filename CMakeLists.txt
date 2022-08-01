@@ -31,6 +31,9 @@ add_executable(main
   engine/src/module/time.cpp
   engine/src/module/main_window.cpp
   engine/src/module/fs.cpp
+  engine/src/module/space/space.cpp
+  engine/src/module/space/SpatialIndex.cpp
+
 )
 target_include_directories(main PRIVATE engine/include)
 
