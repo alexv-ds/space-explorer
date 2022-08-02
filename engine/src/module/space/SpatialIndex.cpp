@@ -61,4 +61,18 @@ void SpatialIndex::process_queues() {
   }
 };
 
+void SpatialIndex::intersects_query(std::vector<flecs::entity_t>& out, const glm::vec2 center, const glm::vec2 size) {
+  BBox bbox(
+    center.x - size.x / 2.0f,
+    center.y + size.y / 2.0f,
+    size.x,
+    size.y
+  );
+  loose_quadtree::LooseQuadtree<float,TreeObject,BBoxExtractor>::Query query = this->pimpl->quad_tree.QueryIntersectsRegion(bbox);
+  while (query.EndOfQuery()) {
+    out.push_back(query.GetCurrent()->holder);
+    query.Next();
+  }
+}
+
 }

@@ -17,7 +17,9 @@ int main(int argc, char const *argv[]) {
   engine.p_world->entity().set<engine::main_window::Init>({});
   engine.p_world->add<engine::main_window::DestroyWorldIfClosed>();
 
-
+  engine.p_world->entity("TESTENTITYBLED")
+    .set<engine::space::Object>({})
+    .set<engine::space::Position>({});
 
 
   engine.run();

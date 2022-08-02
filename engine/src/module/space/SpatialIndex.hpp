@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include <concurrentqueue.h>
 #include <engine/utils/noncopyable.hpp>
 #include "TreeObject.hpp"
@@ -15,6 +16,8 @@ public:
   std::shared_ptr<TreeObject> create_object();
   void process_queues();
   ~SpatialIndex();
+
+  void intersects_query(std::vector<flecs::entity_t>& out, const glm::vec2 center, const glm::vec2 size);
 private:
   struct Pimpl;
   friend class TreeObject;
@@ -28,7 +31,6 @@ private:
   std::unique_ptr<Pimpl> pimpl;
 
   SpatialIndex();
-
 };
 
 
