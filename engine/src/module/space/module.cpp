@@ -29,7 +29,6 @@ Space::Space(flecs::world& world) {
   world.component<internal::WorldSpatialIndex>("internal::WorldSpatialIndex");
   world.component<internal::WorldTreeObject>("internal::WorldTreeObject");
   world.component<internal::UpdateTreeObject>("internal::UpdateTreeOpject");
-  world.component<internal::LoadIntersections>("internal::LoadIntersections");
   world.component<internal::BBoxSize>("internal::BBoxSize")
     .member<decltype(internal::BBoxSize::x)>("x")
     .member<decltype(internal::BBoxSize::y)>("y");
@@ -37,27 +36,14 @@ Space::Space(flecs::world& world) {
   //init singleton
   world.set<internal::WorldSpatialIndex>({
     .p_index = internal::SpatialIndex::create_index(),
-    .q_for_init = world.query_builder<>()
-      .term<Position>()
-      .term<internal::BBoxSize>()
+    .q_for_init = world.query_builder<const Position, const internal::BBoxSize>()
       .term<internal::UpdateTreeObject>()
       .term<internal::WorldTreeObject>().oper(flecs::Not).read_write()
       .build(),
+    .q_for_update = world.query_builder<const Position, const internal::BBoxSize, internal::WorldTreeObject>()
+      .term<internal::UpdateTreeObject>()
+      .build()
   });
-
-  //world.observer<const Object, const Position>("observers::OnAdd_Object_Position")
-  //  .event(flecs::OnAdd)
-  //  .each(internal::Observer_OnAdd_Object_Position);
-
-  /*world.system<const Object, const Position>("systems::InitTreeObject")
-    .kind<MainThread_Pre>()
-    .term<internal::UpdateTreeObject>()
-    .term<internal::WorldTreeObject>().oper(flecs::Not)
-    .term<internal::WorldSpatialIndex>().singleton()
-    .iter(internal::System_InitTreeObject);*/
-  
-  //world.observer<const Object>("observers::MarkBboxUpdate_OnObjectChange")
-  //  .term<inte
 
   world.observer<const Object>("observers::UpdateBBox_Object")
     .event(flecs::OnAdd)
@@ -87,9 +73,27 @@ Space::Space(flecs::world& world) {
     .event(flecs::OnRemove)
     .term<Object>()
     .each(internal::Observer_RemoveBBox);
-  
-  //world.
 
+  world.observer("observers::UpdatePosition")
+    .event(flecs::OnAdd)
+    .event(flecs::OnSet)
+    .term<Object>()
+    .term<Position>()
+    .each([](flecs::entity e) {
+      e.add<internal::UpdateTreeObject>();
+    });
+
+  world.system<internal::WorldSpatialIndex>("systems::SpatialIndexUpdate")
+    .kind<MainThread_Pre>()
+    .arg(1).read_write().singleton()
+    .iter(internal::System_SpatialIndexUpdate);
+
+  world.system<const internal::WorldTreeObject>("systems::HandeIntersections")
+    .kind(flecs::OnUpdate)
+    .term<internal::WorldSpatialIndex>().singleton()
+    .term<internal::UpdateTreeObject>()
+    .term<HandleIntersections>()
+    .iter(internal::System_HandeIntersections);
 };
 
 

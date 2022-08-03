@@ -10,7 +10,6 @@ struct WorldTreeObject {
 };
 
 struct UpdateTreeObject {};
-struct LoadIntersections {};
 struct BBoxSize {
   float x;
   float y;
@@ -18,8 +17,8 @@ struct BBoxSize {
 
 struct WorldSpatialIndex {
   std::shared_ptr<SpatialIndex> p_index;
-  flecs::query<> q_for_init;
-  //flecs::query<Object, BBoxSize> q_for_update;
+  flecs::query<const Position, const BBoxSize> q_for_init;
+  flecs::query<const Position, const BBoxSize, WorldTreeObject> q_for_update;
 };
 
 

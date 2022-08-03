@@ -16,9 +16,12 @@ struct Object {
   float x;
   float y;
 };
-struct Position : glm::vec2 {};
+struct Position {
+  float x;
+  float y;
+};
 struct Rotation {
-  float angle;
+  float angle; //in radians
 };
 struct Scale {
   float x;

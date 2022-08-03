@@ -5,12 +5,10 @@
 
 namespace engine::space::internal {
 
-void Observer_OnAdd_Object_Position(flecs::entity, const Object&, const Position&);
-void System_InitTreeObject(flecs::iter, const Object*, const Position*);
 void System_SpatialIndexUpdate(flecs::iter, WorldSpatialIndex*);
+void System_HandeIntersections(flecs::iter, const WorldTreeObject*);
 
-
-//BBOX CALCS
+//BBOX UPDATE CALCS
 void Observer_RemoveBBox(flecs::entity e);
 void Observer_UpdateBBox_ObjectRotationScale(flecs::entity e, const Object& obj, const Rotation& rotation, const Scale& scale);
 void Observer_UpdateBBox_ObjectRotation(flecs::entity e, const Object& obj, const Rotation& rotation);

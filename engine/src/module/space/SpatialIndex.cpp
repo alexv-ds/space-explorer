@@ -69,7 +69,7 @@ void SpatialIndex::intersects_query(std::vector<flecs::entity_t>& out, const glm
     size.y
   );
   loose_quadtree::LooseQuadtree<float,TreeObject,BBoxExtractor>::Query query = this->pimpl->quad_tree.QueryIntersectsRegion(bbox);
-  while (query.EndOfQuery()) {
+  while (!query.EndOfQuery()) {
     out.push_back(query.GetCurrent()->holder);
     query.Next();
   }
