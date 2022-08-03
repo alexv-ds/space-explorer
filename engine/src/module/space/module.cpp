@@ -30,7 +30,6 @@ Space::Space(flecs::world& world) {
   world.component<internal::WorldTreeObject>("internal::WorldTreeObject");
   world.component<internal::UpdateTreeObject>("internal::UpdateTreeOpject");
   world.component<internal::LoadIntersections>("internal::LoadIntersections");
-  world.component<internal::UpdateBBoxSize>("internal::UpdateBBoxSize");
   world.component<internal::BBoxSize>("internal::BBoxSize")
     .member<decltype(internal::BBoxSize::x)>("x")
     .member<decltype(internal::BBoxSize::y)>("y");
