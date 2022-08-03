@@ -12,12 +12,19 @@ struct Space {
 
 namespace engine::space {
 
-struct Object : glm::vec2 {};
+struct Object {
+  float x;
+  float y;
+};
 struct Position : glm::vec2 {};
 struct Rotation {
   float angle;
 };
-struct Scale : glm::vec2 {};
+struct Scale {
+  float x;
+  float y;
+};
+
 struct HandleIntersections {};
 struct IntersectsWith {}; //relation
 

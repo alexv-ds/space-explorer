@@ -11,7 +11,10 @@ struct WorldTreeObject {
 
 struct UpdateTreeObject {};
 struct LoadIntersections {};
-struct BBoxSize : glm::vec2 {};
+struct BBoxSize {
+  float x;
+  float y;
+};
 
 struct WorldSpatialIndex {
   std::shared_ptr<SpatialIndex> p_index;
