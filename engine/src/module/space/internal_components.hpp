@@ -5,10 +5,6 @@
 
 namespace engine::space::internal {
 
-struct WorldSpatialIndex {
-  std::shared_ptr<SpatialIndex> p_index;
-};
-
 struct WorldTreeObject {
   std::shared_ptr<TreeObject> p_object;
 };
@@ -16,5 +12,12 @@ struct WorldTreeObject {
 struct UpdateTreeObject {};
 struct LoadIntersections {};
 struct BBoxSize : glm::vec2 {};
-  
+
+struct WorldSpatialIndex {
+  std::shared_ptr<SpatialIndex> p_index;
+  flecs::query<> q_for_init;
+  //flecs::query<Object, BBoxSize> q_for_update;
+};
+
+
 }

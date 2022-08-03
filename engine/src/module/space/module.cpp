@@ -1,8 +1,7 @@
+#include <engine/Engine.hpp>
 #include <engine/module/space.hpp>
 #include "internal_components.hpp"
 #include "systems.hpp"
-
-#include <spdlog/spdlog.h>
 
 namespace engine {
 using namespace space;
@@ -33,15 +32,31 @@ Space::Space(flecs::world& world) {
     .member<decltype(internal::BBoxSize::y)>("y");
 
   //init singleton
-  world.set<internal::WorldSpatialIndex>({.p_index = internal::SpatialIndex::create_index()});
+  world.set<internal::WorldSpatialIndex>({
+    .p_index = internal::SpatialIndex::create_index(),
+    .q_for_init = world.query_builder<>()
+      .term<Position>()
+      .term<internal::BBoxSize>()
+      .term<internal::UpdateTreeObject>()
+      .term<internal::WorldTreeObject>().oper(flecs::Not).read_write()
+      .build(),
+  });
 
   world.observer<const Object, const Position>("observers::OnAdd_Object_Position")
-    .term<internal::WorldSpatialIndex>().singleton()
     .event(flecs::OnAdd)
     .each(internal::Observer_OnAdd_Object_Position);
 
+  /*world.system<const Object, const Position>("systems::InitTreeObject")
+    .kind<MainThread_Pre>()
+    .term<internal::UpdateTreeObject>()
+    .term<internal::WorldTreeObject>().oper(flecs::Not)
+    .term<internal::WorldSpatialIndex>().singleton()
+    .iter(internal::System_InitTreeObject);*/
 
-
+  world.system<internal::WorldSpatialIndex>("systems::SpatialIndexUpdate")
+    .kind<MainThread_Pre>()
+    .arg(1).inout(flecs::InOut).singleton()
+    .iter(internal::System_SpatialIndexUpdate);
 
 
   
