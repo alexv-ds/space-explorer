@@ -101,7 +101,7 @@ Engine::Engine() {
       for (auto i : it) {
         flecs::entity e = it.entity(i);
         str_buffer.clear();
-        str_buffer += e.name();
+        str_buffer += e.path("::", "");
         if (auto it = p_list->priorities.find(str_buffer); it != p_list->priorities.end()) {
           e.set<RenderSystemPriority>({.priority=it->second});
         } else {

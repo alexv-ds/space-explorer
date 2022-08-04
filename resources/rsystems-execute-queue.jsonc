@@ -1,3 +1,4 @@
 [
-  "Window Swap Buffers" //Отображаем на экран, должен идти последним
+  "system::GlClear",
+  "engine::main_window::Window Swap Buffers" //Отображаем на экран, должен идти последним
 ]
