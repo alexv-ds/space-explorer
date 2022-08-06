@@ -25,6 +25,54 @@ inline static main_window::VideoMode video_mode_cast(sf::VideoMode mode) {
   };
 }
 
+static void ogl_debug_callback(GLenum source,
+                               GLenum type, 
+                               GLuint id, 
+                               GLenum severity, 
+                               GLsizei length, 
+                               const GLchar* message, 
+                               const void* userParam)
+{
+  auto source_str = [source]() -> std::string {
+    switch (source)
+	  {
+	    case GL_DEBUG_SOURCE_API: return "API";
+	    case GL_DEBUG_SOURCE_WINDOW_SYSTEM: return "WINDOW SYSTEM";
+	    case GL_DEBUG_SOURCE_SHADER_COMPILER: return "SHADER COMPILER";
+	    case GL_DEBUG_SOURCE_THIRD_PARTY:  return "THIRD PARTY";
+	    case GL_DEBUG_SOURCE_APPLICATION: return "APPLICATION";
+	    case GL_DEBUG_SOURCE_OTHER: return "OTHER";
+        default: return "UNKNOWN";
+	  }
+  }();
+
+  auto type_str = [type]() {
+	  switch (type)
+	  {
+	    case GL_DEBUG_TYPE_ERROR: return "ERROR";
+	    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return "DEPRECATED_BEHAVIOR";
+	    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: return "UNDEFINED_BEHAVIOR";
+	    case GL_DEBUG_TYPE_PORTABILITY: return "PORTABILITY";
+	    case GL_DEBUG_TYPE_PERFORMANCE: return "PERFORMANCE";
+	    case GL_DEBUG_TYPE_MARKER:  return "MARKER";
+	    case GL_DEBUG_TYPE_OTHER: return "OTHER";
+      default: return "UNKNOWN";
+	  }
+  }();
+
+  auto severity_str = [severity]() {
+	  switch (severity) {
+	    case GL_DEBUG_SEVERITY_NOTIFICATION: return "NOTIFICATION";
+	    case GL_DEBUG_SEVERITY_LOW: return "LOW";
+	    case GL_DEBUG_SEVERITY_MEDIUM: return "MEDIUM";
+	    case GL_DEBUG_SEVERITY_HIGH: return "HIGH";
+      default: return "UNKNOWN";
+	  }
+  }();
+
+  SPDLOG_DEBUG("{}, {}, {}, {}: {}", source_str, type_str, severity_str, id, message);
+}
+
 MainWindow::MainWindow(flecs::world& world) {
   using namespace main_window;
 
@@ -175,6 +223,14 @@ MainWindow::MainWindow(flecs::world& world) {
         world.set<OpenglViewport>(viewport);
         glViewport(viewport.x, viewport.y, viewport.width, viewport.height);
       }
+      
+      //Инициализируем дебажные штуки
+      if (init.debug) {
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(ogl_debug_callback, nullptr);
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      }
+
     });
 
     world.component<OnClose>();
